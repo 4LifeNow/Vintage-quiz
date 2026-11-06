@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20261103-21-8e2fab0","C":{"Playfair Display":"YAFdJhem5V8,1","Work Sans":"YAGXhLOKv44,0"}}');</script><script src="/_sdk/640c2c9485552aa0.telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vintage Capital Cities Quiz — 1980s Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#173e43; --rust:#bb4d34; --paper:#f5eddb; --gold:#d6aa58; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); font-family:"Work Sans",sans-serif; background:var(--paper); }
+    .paper {
+      background-image: repeating-linear-gradient(0deg,rgba(64,53,35,.025) 0,rgba(64,53,35,.025) 1px,transparent 1px,transparent 5px);
+    }
+    .display { font-family:"Playfair Display",serif; }
+    .poster-frame { box-shadow: 10px 12px 0 rgba(23,62,67,.14), 0 20px 40px rgba(44,49,32,.12); }
+    .poster-image { filter:sepia(.25) saturate(.75) contrast(1.06); }
+    .choice { transition:transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease; }
+    .choice:not(:disabled):hover { transform:translateY(-2px); border-color:var(--rust); box-shadow:0 4px 10px rgba(23,62,67,.1); }
+    .choice:disabled { cursor:default; }
+    .choice.correct { background:#d9e7d8 !important; border-color:#358066 !important; color:#173e43 !important; font-weight:700 !important; }
+    .choice.incorrect { background:#f3d9cf !important; border-color:#bb4d34 !important; color:#713b2b !important; }
+    :focus-visible { outline:3px solid var(--rust); outline-offset:3px; }
+    .reveal { animation:appear .32s ease both; }
+    @keyframes appear { from {opacity:0;transform:translateY(10px)} to {opacity:1;transform:translateY(0)} }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after {animation-duration:.01ms!important;transition-duration:.01ms!important} }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/8fed440c6f94b5da.data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/336a49df5a82c939.editing_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/dfeb017e55db4863.resizing_sdk.js" type="text/javascript"></script>
+</head>
+<body data-template-id="__page-root" class="w-full min-h-screen" style="background: rgb(245, 237, 219);">
+  <div class="paper w-full min-h-screen px-4 py-6 sm:px-8 sm:py-10">
+    <div class="mx-auto max-w-5xl">
+      <!-- HEADER -->
+      <header class="border-y-2 border-[#173e43] py-5 sm:py-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p data-template-id="eyebrow" class="canva-text mb-1 font-bold uppercase tracking-[.25em]" style="color: rgb(187, 77, 52); font-size: 11px;">THE GLOBAL CAPITALS • 1980s EDITION</p>
+            <h1 data-template-id="page-title" class="canva-text display leading-[1.1]" style="color: rgb(23, 62, 67); font-weight: 800; font-size: 32px;">Stars &amp; Cities</h1>
+            <p data-template-id="intro" class="canva-text mt-2 max-w-2xl leading-relaxed text-sm sm:text-base" style="color: rgb(54, 88, 90);">25 iconic figures of 1980s cinema, music, and television. Can you pinpoint the capital city each legend was born in?</p>
+          </div>
+          <div data-template-id="stamp" class="canva-tag flex h-20 w-20 shrink-0 rotate-6 flex-col items-center justify-center rounded-full border-2 border-current text-center sm:h-24 sm:w-24" style="color: rgb(187, 77, 52);">
+            <span data-template-id="stamp-top" class="canva-text font-bold uppercase tracking-widest text-[9px] sm:text-[10px]" style="color: rgb(187, 77, 52);">EDITION</span>
+            <span data-template-id="stamp-bottom" class="canva-text display font-bold text-xl sm:text-2xl" style="color: rgb(187, 77, 52);">’80s</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN QUIZ AREA -->
+      <main class="pt-6 sm:pt-8">
+        <div id="quiz-area">
+          <!-- PROGRESS & STATUS -->
+          <div class="mb-6 flex flex-col gap-2 border-b border-[#173e43]/20 pb-4">
+            <div class="flex items-center justify-between text-xs sm:text-sm font-bold tracking-widest uppercase text-[#173e43]">
+              <span>Passport Itinerary</span>
+              <span id="progress-value" aria-live="polite">01 / 25</span>
+            </div>
+            <!-- Visual Bar -->
+            <div class="w-full bg-[#173e43]/15 h-2 rounded-full overflow-hidden">
+              <div id="progress-bar-fill" class="bg-[#bb4d34] h-full transition-all duration-300" style="width: 4%;"></div>
+            </div>
+          </div>
+
+          <!-- QUESTION CONTAINER -->
+          <div id="card-mount" class="reveal">
+            <!-- Injected dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <section id="results" class="reveal hidden mx-auto max-w-2xl border-[9px] border-[#173e43] p-8 text-center shadow-[10px_12px_0_rgba(23,62,67,.14)] bg-[#fbf7ec]" aria-live="polite">
+          <p data-template-id="results-kicker" class="canva-text font-bold uppercase tracking-[.25em]" style="color: rgb(187, 77, 52); font-size: 12px;">VOYAGE COMPLETED</p>
+          <h2 data-template-id="results-heading" class="canva-text display mt-3 font-bold" style="color: rgb(23, 62, 67); font-size: 28px;">Your Global Tally</h2>
+          <p id="score-value" class="display my-6 text-7xl font-bold text-[#bb4d34] sm:text-8xl">0 / 25</p>
+          <p id="results-verdict" class="canva-text mx-auto max-w-md leading-relaxed font-medium" style="color: rgb(54, 88, 90); font-size: 16px;"></p>
+          <button id="restart" type="button" class="canva-button mt-8 rounded-sm px-8 py-4 font-bold text-white uppercase tracking-wider" style="background: rgb(187, 77, 52);">Travel Again ↗</button>
+        </section>
+      </main>
+
+      <!-- FOOTER -->
+      <footer class="mt-12 border-t-2 border-[#173e43] pt-4 pb-6">
+        <p data-template-id="footer-note" class="canva-text text-xs leading-relaxed" style="color: rgb(86, 112, 116);">Travel poster imagery is illustrative art; photos represent global landscapes and archival aesthetics. Quiz solutions correspond to verified historical birthplaces of the featured stars.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // --- WEB AUDIO SYNTHESIZER ---
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+
+        const now = ctx.currentTime;
+
+        if (type === 'correct') {
+          // Play a cheerful high chime (C5 -> E5)
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc1.type = 'triangle';
+          osc2.type = 'triangle';
+
+          osc1.frequency.setValueAtTime(523.25, now); // C5
+          osc2.frequency.setValueAtTime(659.25, now + 0.12); // E5
+
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc1.start(now);
+          osc1.stop(now + 0.15);
+          osc2.start(now + 0.12);
+          osc2.stop(now + 0.5);
+
+        } else if (type === 'incorrect') {
+          // Play a lower, gentle buzzer sound
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now); // A3
+          osc.frequency.linearRampToValueAtTime(170, now + 0.28); // slide down
+
+          gain.gain.setValueAtTime(0.14, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 0.32);
+        }
+      } catch (err) {
+        console.error("Audio playback error:", err);
+      }
+    }
+
+    // --- QUIZ DATA ---
+    const quizData = [
+      {
+        kicker: "STOP 01 • THE SILVER SCREEN",
+        star: "Goldie Hawn",
+        title: "Where was Goldie Hawn born?",
+        clue: "The star of Private Benjamin (1980) and Overboard (1987) began her journey in which capital?",
+        image: "https://images.pexels.com/photos/356844/pexels-photo-356844.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "A star is born",
+        postcard: "POSTCARD NO. 01 • UNITED STATES",
+        choices: ["Washington, D.C.", "Ottawa", "Mexico City", "London"],
+        answer: 0,
+        explanation: "Goldie Hawn was born in Washington, D.C., the capital of the United States."
+      },
+      {
+        kicker: "STOP 02 • COMEDY CLASSIC",
+        star: "Dan Aykroyd",
+        title: "Where was Dan Aykroyd born?",
+        clue: "Before Ghostbusters (1984) and The Blues Brothers (1980), this comedy icon was born in which capital?",
+        image: "https://images.pexels.com/photos/302769/pexels-photo-302769.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Who ya gonna call?",
+        postcard: "POSTCARD NO. 02 • CANADA",
+        choices: ["Toronto", "Ottawa", "London", "Washington, D.C."],
+        answer: 1,
+        explanation: "Dan Aykroyd was born in Ottawa, the national capital of Canada."
+      },
+      {
+        kicker: "STOP 03 • TELENOVELA ICON",
+        star: "Verónica Castro",
+        title: "Where was Verónica Castro born?",
+        clue: "The internationally acclaimed lead of 1980s television dramas like Rosa salvaje was born in which capital?",
+        image: "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Queen of drama",
+        postcard: "POSTCARD NO. 03 • MEXICO",
+        choices: ["Bogotá", "Madrid", "Mexico City", "Buenos Aires"],
+        answer: 2,
+        explanation: "Verónica Castro was born in Mexico City, Mexico."
+      },
+      {
+        kicker: "STOP 04 • ACTION ROYALTY",
+        star: "Sigourney Weaver",
+        title: "Where was Sigourney Weaver born?",
+        clue: "The Oscar-nominated star of Aliens (1986) and Ghostbusters was born in which historic capital city?",
+        image: "https://images.pexels.com/photos/1796730/pexels-photo-1796730.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Galactic hero",
+        postcard: "POSTCARD NO. 04 • UNITED STATES",
+        choices: ["Albany", "Washington, D.C.", "Sacramento", "New York City"],
+        answer: 3,
+        explanation: "Sigourney Weaver was born in New York City (which served as the first national capital under the Constitution from 1789 to 1790)."
+      },
+      {
+        kicker: "STOP 05 • BRITISH INVASION",
+        star: "Gary Oldman",
+        title: "Where was Gary Oldman born?",
+        clue: "The transformative star who stunned audiences in Sid and Nancy (1986) hails from which capital?",
+        image: "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Chameleon of cinema",
+        postcard: "POSTCARD NO. 05 • UNITED KINGDOM",
+        choices: ["Edinburgh", "London", "Dublin", "Cardiff"],
+        answer: 1,
+        explanation: "Gary Oldman was born in New Cross, London, England."
+      },
+      {
+        kicker: "STOP 06 • SCI-FI LEGEND",
+        star: "Harrison Ford",
+        title: "Where was Harrison Ford born?",
+        clue: "Indiana Jones and Han Solo ruled the ’80s box office, but where was Ford born?",
+        image: "https://images.pexels.com/photos/208745/pexels-photo-208745.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Fortune and glory",
+        postcard: "POSTCARD NO. 06 • MIDWEST ORIGINS",
+        choices: ["Washington, D.C.", "Springfield", "Chicago", "Indianapolis"],
+        answer: 2,
+        explanation: "Harrison Ford was born at Swedish Covenant Hospital in Chicago, Illinois."
+      },
+      {
+        kicker: "STOP 07 • FRENCH SCREEN SIREN",
+        star: "Sophie Marceau",
+        title: "Where was Sophie Marceau born?",
+        clue: "Bursting onto the scene in the smash French teen comedy La Boum (1980), which capital was her birthplace?",
+        image: "https://images.pexels.com/photos/161853/eiffel-tower-paris-france-tower-161853.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "La belle étoile",
+        postcard: "POSTCARD NO. 07 • FRANCE",
+        choices: ["Brussels", "Paris", "Bern", "Monaco"],
+        answer: 1,
+        explanation: "Sophie Marceau was born in Paris, France."
+      },
+      {
+        kicker: "STOP 08 • THE TIME TRAVELER",
+        star: "Michael J. Fox",
+        title: "Where was Michael J. Fox born?",
+        clue: "The beloved star of Back to the Future (1985) and Family Ties was born in which Canadian capital city?",
+        image: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Great Scott!",
+        postcard: "POSTCARD NO. 08 • ALBERTA, CANADA",
+        choices: ["Ottawa", "Victoria", "Edmonton", "Calgary"],
+        answer: 2,
+        explanation: "Michael J. Fox was born in Edmonton, the provincial capital of Alberta, Canada."
+      },
+      {
+        kicker: "STOP 09 • SPANISH VISIONARY",
+        star: "Antonio Banderas",
+        title: "Where was Antonio Banderas born?",
+        clue: "Before conquering Hollywood, Banderas rose to fame in Pedro Almodóvar's ’80s classics. In which city?",
+        image: "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Passion of Andalusia",
+        postcard: "POSTCARD NO. 09 • SPAIN",
+        choices: ["Málaga", "Madrid", "Lisbon", "Seville"],
+        answer: 0,
+        explanation: "Antonio Banderas was born in Málaga, the capital city of the Province of Málaga in Andalusia, Spain."
+      },
+      {
+        kicker: "STOP 10 • IRISH MASTER",
+        star: "Daniel Day-Lewis",
+        title: "Where was Daniel Day-Lewis born?",
+        clue: "Winning his first Oscar for My Left Foot (1989), where did this legendary method actor begin life?",
+        image: "https://images.pexels.com/photos/672451/pexels-photo-672451.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Unrivaled dedication",
+        postcard: "POSTCARD NO. 10 • UNITED KINGDOM",
+        choices: ["Dublin", "London", "Belfast", "Edinburgh"],
+        answer: 1,
+        explanation: "Daniel Day-Lewis was born in Kensington, London, England."
+      },
+      {
+        kicker: "STOP 11 • MARTIAL ARTS PHENOM",
+        star: "Jackie Chan",
+        title: "Where was Jackie Chan born?",
+        clue: "The stunt king redefined cinema in 1980s hits like Police Story and Project A. Where was he born?",
+        image: "https://images.pexels.com/photos/1337144/pexels-photo-1337144.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Fearless action",
+        postcard: "POSTCARD NO. 11 • EAST ASIA",
+        choices: ["Beijing", "Taipei", "Hong Kong", "Singapore"],
+        answer: 2,
+        explanation: "Jackie Chan was born in Victoria Peak, Hong Kong."
+      },
+      {
+        kicker: "STOP 12 • POP ROYALS",
+        star: "Whitney Houston",
+        title: "Where was Whitney Houston born?",
+        clue: "Dominating the 1980s charts with hit after hit, 'The Voice' was born in which neighboring city?",
+        image: "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "The Voice",
+        postcard: "POSTCARD NO. 12 • NEW JERSEY, USA",
+        choices: ["Newark", "Trenton", "Washington, D.C.", "Philadelphia"],
+        answer: 0,
+        explanation: "Whitney Houston was born in Newark, New Jersey."
+      },
+      {
+        kicker: "STOP 13 • ITALIAN CINEMA",
+        star: "Monica Bellucci",
+        title: "Where was Monica Bellucci born?",
+        clue: "Before becoming a global fashion and movie icon in the late ’80s and ’90s, she was born in which Italian city?",
+        image: "https://images.pexels.com/photos/2064827/pexels-photo-2064827.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Timeless allure",
+        postcard: "POSTCARD NO. 13 • ITALY",
+        choices: ["Rome", "Milan", "Città di Castello", "Florence"],
+        answer: 2,
+        explanation: "Monica Bellucci was born in Città di Castello, Umbria, Italy."
+      },
+      {
+        kicker: "STOP 14 • THE CHARISMA KING",
+        star: "Denzel Washington",
+        title: "Where was Denzel Washington born?",
+        clue: "St. Elsewhere and Glory (1989) earned him his breakout acclaim. Where was Denzel born?",
+        image: "https://images.pexels.com/photos/290386/pexels-photo-290386.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Commanding dignity",
+        postcard: "POSTCARD NO. 14 • NEW YORK, USA",
+        choices: ["Washington, D.C.", "Mount Vernon", "Albany", "Richmond"],
+        answer: 1,
+        explanation: "Denzel Washington was born in Mount Vernon, New York."
+      },
+      {
+        kicker: "STOP 15 • CANADIAN ROCKSTAR",
+        star: "Bryan Adams",
+        title: "Where was Bryan Adams born?",
+        clue: "Rocking the 1980s with Reckless and 'Summer of '69', Adams was born in which Canadian capital?",
+        image: "https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Straight from the heart",
+        postcard: "POSTCARD NO. 15 • ONTARIO, CANADA",
+        choices: ["Ottawa", "Kingston", "Vancouver", "Toronto"],
+        answer: 1,
+        explanation: "Bryan Adams was born in Kingston, Ontario (which served as the first capital of the United Province of Canada)."
+      },
+      {
+        kicker: "STOP 16 • POP MAESTRO",
+        star: "George Michael",
+        title: "Where was George Michael born?",
+        clue: "The Wham! frontman and Faith solo sensation ruled 1980s pop. In which capital city was he born?",
+        image: "https://images.pexels.com/photos/427679/pexels-photo-427679.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Careless whisper",
+        postcard: "POSTCARD NO. 16 • UNITED KINGDOM",
+        choices: ["Athens", "Nicosia", "London", "Manchester"],
+        answer: 2,
+        explanation: "George Michael was born in East Finchley, London, England."
+      },
+      {
+        kicker: "STOP 17 • COMEDIC GENIUS",
+        star: "Robin Williams",
+        title: "Where was Robin Williams born?",
+        clue: "From Mork & Mindy to Dead Poets Society (1989), where was this beloved genius born?",
+        image: "https://images.pexels.com/photos/1563256/pexels-photo-1563256.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Carpe diem",
+        postcard: "POSTCARD NO. 17 • ILLINOIS, USA",
+        choices: ["Chicago", "Springfield", "San Francisco", "Indianapolis"],
+        answer: 0,
+        explanation: "Robin Williams was born at St. Luke's Hospital in Chicago, Illinois."
+      },
+      {
+        kicker: "STOP 18 • BRAZILIAN SENSATION",
+        star: "Xuxa",
+        title: "Where was Xuxa born?",
+        clue: "The 'Queen of the Shorties' became an unprecedented Latin American media phenomenon in the late ’80s. Born in which city?",
+        image: "https://images.pexels.com/photos/2868222/pexels-photo-2868222.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Reina de los bajitos",
+        postcard: "POSTCARD NO. 18 • BRAZIL",
+        choices: ["Brasília", "Rio de Janeiro", "Santa Rosa", "São Paulo"],
+        answer: 2,
+        explanation: "Xuxa (Maria da Graça Meneghel) was born in Santa Rosa, Rio Grande do Sul, Brazil."
+      },
+      {
+        kicker: "STOP 19 • HOLLYWOOD HEAVYWEIGHT",
+        star: "Mel Gibson",
+        title: "Where was Mel Gibson born?",
+        clue: "Though synonymous with Australian cinema in Mad Max and Gallipoli, Gibson was actually born in which city?",
+        image: "https://images.pexels.com/photos/256150/pexels-photo-256150.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "The Road Warrior",
+        postcard: "POSTCARD NO. 19 • NEW YORK, USA",
+        choices: ["Sydney", "Peekskill", "Canberra", "Melbourne"],
+        answer: 1,
+        explanation: "Mel Gibson was born in Peekskill, New York, before moving to Australia at age 12."
+      },
+      {
+        kicker: "STOP 20 • NEW WAVE ICON",
+        star: "Annie Lennox",
+        title: "Where was Annie Lennox born?",
+        clue: "The synth-pop voice of Eurythmics ('Sweet Dreams') was born on Christmas Day in which city?",
+        image: "https://images.pexels.com/photos/2707756/pexels-photo-2707756.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Sweet dreams",
+        postcard: "POSTCARD NO. 20 • SCOTLAND",
+        choices: ["Edinburgh", "Aberdeen", "Glasgow", "London"],
+        answer: 1,
+        explanation: "Annie Lennox was born in Aberdeen, Scotland."
+      },
+      {
+        kicker: "STOP 21 • THE QUEEN OF COMEDY",
+        star: "Catherine O'Hara",
+        title: "Where was Catherine O'Hara born?",
+        clue: "Star of Beetlejuice (1988) and SCTV, where was this comedy legend born?",
+        image: "https://images.pexels.com/photos/374870/pexels-photo-374870.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Day-O brilliance",
+        postcard: "POSTCARD NO. 21 • CANADA",
+        choices: ["Ottawa", "Toronto", "Montreal", "Vancouver"],
+        answer: 1,
+        explanation: "Catherine O'Hara was born in Toronto, Ontario, the provincial capital."
+      },
+      {
+        kicker: "STOP 22 • ACTION HEROINE",
+        star: "Linda Hamilton",
+        title: "Where was Linda Hamilton born?",
+        clue: "Playing Sarah Connor in The Terminator (1984), where did this Maryland native begin her life?",
+        image: "https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Defying the machine",
+        postcard: "POSTCARD NO. 22 • MARYLAND, USA",
+        choices: ["Salisbury", "Annapolis", "Washington, D.C.", "Baltimore"],
+        answer: 0,
+        explanation: "Linda Hamilton was born in Salisbury, Maryland."
+      },
+      {
+        kicker: "STOP 23 • EUROVISION & BEYOND",
+        star: "Céline Dion",
+        title: "Where was Céline Dion born?",
+        clue: "Before global superstardom, she won Eurovision 1988 for Switzerland. But where was she born?",
+        image: "https://images.pexels.com/photos/2225439/pexels-photo-2225439.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "The power of love",
+        postcard: "POSTCARD NO. 23 • QUEBEC, CANADA",
+        choices: ["Quebec City", "Charlemagne", "Montreal", "Bern"],
+        answer: 1,
+        explanation: "Céline Dion was born in Charlemagne, Quebec, just east of Montreal."
+      },
+      {
+        kicker: "STOP 24 • MARTIAL ARTS TITAN",
+        star: "Jean-Claude Van Damme",
+        title: "Where was Jean-Claude Van Damme born?",
+        clue: "The 'Muscles from Brussels' broke out in Bloodsport (1988). Which capital was his hometown?",
+        image: "https://images.pexels.com/photos/2082103/pexels-photo-2082103.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Muscles from Brussels",
+        postcard: "POSTCARD NO. 24 • BELGIUM",
+        choices: ["Amsterdam", "Brussels", "Paris", "Luxembourg"],
+        answer: 1,
+        explanation: "Jean-Claude Van Damme was born in Berchem-Sainte-Agathe, Brussels, Belgium."
+      },
+      {
+        kicker: "STOP 25 • POP & BROADWAY LEGEND",
+        star: "Cher",
+        title: "Where was Cher born?",
+        clue: "Winning the Oscar for Moonstruck (1987) and topping charts with 'If I Could Turn Back Time' (1989), where was she born?",
+        image: "https://images.pexels.com/photos/1722183/pexels-photo-1722183.jpeg?auto=compress&cs=tinysrgb&w=1280",
+        caption: "Goddess of pop",
+        postcard: "POSTCARD NO. 25 • CALIFORNIA, USA",
+        choices: ["Sacramento", "El Centro", "Los Angeles", "Washington, D.C."],
+        answer: 1,
+        explanation: "Cher (Cherilyn Sarkisian) was born in El Centro, California."
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    const cardMount = document.getElementById('card-mount');
+    const quizArea = document.getElementById('quiz-area');
+    const results = document.getElementById('results');
+    const progressVal = document.getElementById('progress-value');
+    const progressFill = document.getElementById('progress-bar-fill');
+
+    function renderQuestion(index) {
+      const q = quizData[index];
+      progressVal.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(quizData.length).padStart(2, '0');
+      progressFill.style.width = ((index + 1) / quizData.length * 100) + '%';
+
+      cardMount.innerHTML = `
+        <section class="question grid gap-6 lg:grid-cols-[.92fr_1.08fr] lg:gap-10 items-stretch" data-answered="false">
+          <!-- POSTER CARD -->
+          <div class="poster-frame overflow-hidden border-[8px] border-[#173e43] bg-[#173e43] flex flex-col justify-between">
+            <div class="relative h-60 sm:h-72 lg:h-[380px] overflow-hidden">
+              <img loading="lazy" class="poster-image h-full w-full object-cover" src="${q.image}" alt="${q.caption}">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#102d32]/85 via-transparent to-transparent"></div>
+              <span class="display absolute bottom-4 left-4 right-4 text-center font-bold italic text-white text-2xl sm:text-3xl drop-shadow-md">${q.caption}</span>
+            </div>
+            <div class="px-4 py-2.5 text-center bg-[#173e43]">
+              <p class="font-bold uppercase tracking-[.25em] text-[#f5eddb] text-[10px] sm:text-xs">${q.postcard}</p>
+            </div>
+          </div>
+
+          <!-- QUESTION CONTENT & 4 OPTIONS -->
+          <div class="flex flex-col justify-center py-1">
+            <p class="mb-2 font-bold uppercase tracking-[.2em] text-[#bb4d34] text-xs">${q.kicker}</p>
+            <h2 class="display leading-tight text-[#173e43] font-bold text-2xl sm:text-3xl">${q.title}</h2>
+            <p class="mt-3 leading-relaxed text-[#36585a] text-sm sm:text-base">${q.clue}</p>
+
+            <!-- 2x2 Option Grid -->
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3" role="group" aria-label="Choices">
+              ${q.choices.map((choice, i) => `
+                <button type="button" class="choice w-full rounded-sm border-2 border-[#173e43] px-4 py-3.5 text-left font-semibold text-[#173e43] bg-[#fbf7ec] text-sm sm:text-base" data-index="${i}">
+                  ${choice}
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- Feedback Box -->
+            <div class="feedback mt-5 hidden" role="status" aria-live="polite">
+              <p class="correct-msg hidden font-bold text-[#276c57] text-sm sm:text-base">★ Right on the map!</p>
+              <p class="incorrect-msg hidden font-bold text-[#a4432c] text-sm sm:text-base">✳ Not quite — here's the right destination.</p>
+              <p class="explanation mt-1.5 leading-relaxed text-[#36585a] text-sm">${q.explanation}</p>
+              <button type="button" class="next-btn mt-4 rounded-sm px-6 py-2.5 font-bold text-white bg-[#bb4d34] uppercase text-xs tracking-widest hover:opacity-90">
+                ${index + 1 === quizData.length ? 'See Final Score →' : 'Next Destination →'}
+              </button>
+            </div>
+          </div>
+        </section>
+      `;
+
+      // Setup Click handlers
+      const container = cardMount.querySelector('.question');
+      const choiceButtons = container.querySelectorAll('.choice');
+      const feedback = container.querySelector('.feedback');
+      const nextBtn = container.querySelector('.next-btn');
+
+      choiceButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (container.dataset.answered === 'true') return;
+          container.dataset.answered = 'true';
+
+          const chosen = Number(btn.dataset.index);
+          const isCorrect = chosen === q.answer;
+          
+          // Trigger Audio Tone
+          playSound(isCorrect ? 'correct' : 'incorrect');
+
+          if (isCorrect) score++;
+
+          choiceButtons.forEach((cBtn, idx) => {
+            cBtn.disabled = true;
+            if (idx === q.answer) cBtn.classList.add('correct');
+            else if (idx === chosen) cBtn.classList.add('incorrect');
+          });
+
+          feedback.classList.remove('hidden');
+          feedback.querySelector(isCorrect ? '.correct-msg' : '.incorrect-msg').classList.remove('hidden');
+          nextBtn.focus();
+        });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (current + 1 < quizData.length) {
+          current++;
+          renderQuestion(current);
+        } else {
+          quizArea.classList.add('hidden');
+          document.getElementById('score-value').textContent = score + ' / ' + quizData.length;
+          
+          let verdict = "A spirited attempt! Thanks for journeying across the 1980s globe.";
+          if (score >= 22) verdict = "Flawless globetrotting! You have an encyclopedic knowledge of 1980s pop culture.";
+          else if (score >= 15) verdict = "Impressive travel score! You know your way around both Hollywood and world geography.";
+          document.getElementById('results-verdict').textContent = verdict;
+
+          results.classList.remove('hidden');
+          document.getElementById('restart').focus();
+        }
+      });
+    }
+
+    document.getElementById('restart').addEventListener('click', () => {
+      score = 0;
+      current = 0;
+      results.classList.add('hidden');
+      quizArea.classList.remove('hidden');
+      renderQuestion(0);
+    });
+
+    // Initial render
+    renderQuestion(0);
+  </script>
+</body>
+</html>
